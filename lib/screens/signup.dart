@@ -17,6 +17,7 @@ class SignUp extends StatefulWidget {
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 String pattern =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 RegExp regExp = new RegExp(pattern);
@@ -35,6 +36,7 @@ class _SignUpState extends State<SignUp> {
        print(result.user.uid);
      } on PlatformException catch(e){
        print(e.message.toString());
+       _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(e.message)));
      }
     }
     else{
@@ -147,6 +149,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Form(
           key: _formKey,
