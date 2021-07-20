@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/homepage.dart';
 import 'package:e_commerce/screens/login.dart';
 import 'package:e_commerce/screens/signup.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Login(),
+      home: HomePage(),
     );
   }
 }
