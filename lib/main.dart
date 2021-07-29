@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/detailscreen.dart';
 import 'package:e_commerce/screens/homepage.dart';
 import 'package:e_commerce/screens/listproduct.dart';
 import 'package:e_commerce/screens/login.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: DetailScreen(),
     );
   }
 }
