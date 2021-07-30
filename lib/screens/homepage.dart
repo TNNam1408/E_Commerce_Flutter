@@ -1,3 +1,5 @@
+
+import 'package:e_commerce/screens/detailscreen.dart';
 import 'package:e_commerce/screens/listproduct.dart';
 import 'package:e_commerce/widgets/singleproduct.dart';
 import 'package:flutter/cupertino.dart';
@@ -306,15 +308,33 @@ class _HomePageState extends State<HomePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SingleProduct(
-                              name: "Ducati Motor Bikec",
-                              price: 30.0,
-                              image: "sx1.jpg",
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
+                                  name: "Ducati Motor Bikec",
+                                  price: 30.0,
+                                  image: "sx1.jpg",
+                                )));
+                              },
+                              child: SingleProduct(
+                                name: "Ducati Motor Bikec",
+                                price: 30.0,
+                                image: "sx1.jpg",
+                              ),
                             ),
-                            SingleProduct(
-                              name: "Civic and Ducati",
-                              price: 100.0,
-                              image: "sx3.jpg",
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
+                                  name: "Civic and Ducati",
+                                  price: 100.0,
+                                  image: "sx3.jpg",
+                                )));
+                              },
+                              child: SingleProduct(
+                                name: "Civic and Ducati",
+                                price: 100.0,
+                                image: "sx3.jpg",
+                              ),
                             ),
                           ],
                         ),
@@ -366,15 +386,33 @@ class _HomePageState extends State<HomePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SingleProduct(
-                              name: "Ducati Interface",
-                              price: 40.0,
-                              image: "sx4.jpg",
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
+                                  name: "Ducati Interface",
+                                  price: 40.0,
+                                  image: "sx4.jpg",
+                                )));
+                              },
+                              child: SingleProduct(
+                                name: "Ducati Interface",
+                                price: 40.0,
+                                image: "sx4.jpg",
+                              ),
                             ),
-                            SingleProduct(
-                              name: "Ducati Racing",
-                              price: 1000.0,
-                              image: "sx5.jpg",
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
+                                  name: "Ducati Racing",
+                                  price: 1000.0,
+                                  image: "sx5.jpg",
+                                )));
+                              },
+                              child: SingleProduct(
+                                name: "Ducati Racing",
+                                price: 1000.0,
+                                image: "sx5.jpg",
+                              ),
                             ),
                           ],
                         ),
