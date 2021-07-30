@@ -1,3 +1,5 @@
+
+import 'package:e_commerce/screens/cartscreen.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
@@ -44,7 +46,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildImage(){
+  Widget _buildImage() {
     return Center(
       child: Container(
         width: 350,
@@ -67,7 +69,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildNameToDescriptionPart(){
+  Widget _buildNameToDescriptionPart() {
     return Container(
       height: 100,
       //color: Colors.blueGrey,
@@ -96,7 +98,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildDiscription(){
+  Widget _buildDiscription() {
     return Container(
       height: 300,
       //color: Colors.brown,
@@ -106,8 +108,7 @@ class _DetailScreenState extends State<DetailScreen> {
             children: [
               Text(
                 "Year after year, the Panigale V4 is renewed to become faster and more exciting on the track for both the amateur and the professional rider. For 2021, the Panigale V4 and V4 S models become Euro 5 compliant (only for Markets where Euro 5 is applied), maintaining the maximum power and torque levels unchanged. To comply with the new European standard on polluting emissions, various refinements have been made to the Desmosedici Stradale exhaust line and to the engine calibration. The electronic package that equips the Panigale V4 also evolves and now includes the latest generation Ducati Traction Control which is even more predictive: the DTC EVO 3 with a strategy derived from Ducati Corse.The Riding Mode strategy is also new; specifically, the Race Riding Mode has been split into two mappings that can now be freely compared in the individual parameters, allowing the rider to quickly compare two different configurations to define the best set-up based on the track and riding style. The Panigale V4 and Panigale V4 S models are also equipped with new self-bleeding brake and clutch pumps derived from those used for the first time on the Superleggera V4. Among the features added to the bike for 2021 is the chain guard fin, an important safety precaution that allows you to avoid dangerous contacts with the chain and crown in the event of a slide.  In addition, for those who use the bike all year round, there is now provision for heated grips, while the ignition key has a new, more modern and elegant grip.",
-                style: TextStyle(
-                    fontSize: 16, color: Colors.black),
+                style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ],
           ),
@@ -116,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildSizePart(){
+  Widget _buildSizePart() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -143,7 +144,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildColorPart(){
+  Widget _buildColorPart() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -170,7 +171,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildQuentityPart(){
+  Widget _buildQuentityPart() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -220,23 +221,30 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildButtonPart(){
+  Widget _buildButtonPart() {
     return Container(
       height: 50,
       width: double.infinity,
       // ignore: deprecated_member_use
       child: RaisedButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: Colors.pink,
         child: Text(
           "Check Out",
           style: myStyle,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (ctx) => CartScreen(
+                name: widget.name,
+                image: widget.image,
+                price: widget.price,
+              )));
+        },
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
