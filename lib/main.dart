@@ -1,4 +1,5 @@
 import 'package:e_commerce/screens/cartscreen.dart';
+import 'package:e_commerce/screens/checkout.dart';
 import 'package:e_commerce/screens/detailscreen.dart';
 import 'package:e_commerce/screens/homepage.dart';
 import 'package:e_commerce/screens/listproduct.dart';

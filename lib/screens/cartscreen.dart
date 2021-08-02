@@ -1,3 +1,5 @@
+
+import 'package:e_commerce/screens/checkout.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
@@ -55,7 +57,7 @@ class _CartScreenState extends State<CartScreen> {
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
-                          "\$ ${widget.name.toString()} ",
+                          "\$ ${widget.price.toString()} ",
                           style: TextStyle(
                               fontSize: 18,
                               color: Color(0xff9b96d6),
@@ -145,7 +147,13 @@ class _CartScreenState extends State<CartScreen> {
         child: RaisedButton(
           color: Color(0xff746bc9),
             child: Text("Comtinous", style: myStyle,),
-            onPressed: () {},
+            onPressed: () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>Checkout(
+              image: widget.image,
+              name: widget.name,
+              price: widget.price,
+            )));
+            },
             ),
       ),
       appBar: AppBar(
