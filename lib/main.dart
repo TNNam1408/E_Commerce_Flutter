@@ -5,6 +5,7 @@ import 'package:e_commerce/screens/homepage.dart';
 import 'package:e_commerce/screens/listproduct.dart';
 import 'package:e_commerce/screens/login.dart';
 import 'package:e_commerce/screens/signup.dart';
+import 'package:e_commerce/screens/welcomescreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: WelComeScreen(),
     );
   }
 }
