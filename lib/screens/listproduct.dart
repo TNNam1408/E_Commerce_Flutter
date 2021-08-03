@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
   final String name;
-  ListProduct({this.name});
+  final snapShot;
+  ListProduct({this.name, this.snapShot});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +18,8 @@ class ListProduct extends StatelessWidget {
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (ctx) => HomePage()));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (ctx) => HomePage()));
           },
           icon: Icon(
             Icons.arrow_back,
@@ -69,63 +70,21 @@ class ListProduct extends StatelessWidget {
                 Container(
                   color: Colors.grey[500],
                   height: 500,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.6,
+                  child: GridView.builder(
+
+                    itemCount: snapShot.data.documents.length,
+                    itemBuilder: (ctx, index) => SingleProduct(
+                      name: snapShot.data.documents[index]["name"],
+                      price: snapShot.data.documents[index]["price"],
+                      image: snapShot.data.documents[index]["image"],
+                    ),
+
                     scrollDirection: Axis.vertical,
-                    children: [
-                      SingleProduct(
-                        image: "sx1.jpg",
-                        price: 30.0,
-                        name: "Ducati Motor Bike",
-                      ),
-                      SingleProduct(
-                        image: "sx3.jpg",
-                        price: 100.0,
-                        name: "Civic and Ducati",
-                      ),
-                      SingleProduct(
-                        image: "sx4.jpg",
-                        price: 40.0,
-                        name: "Ducati Motor  & BMW",
-                      ),
-                      SingleProduct(
-                        image: "sx5.jpg",
-                        price: 50.0,
-                        name: "Ducati Race",
-                      ),
-                      SingleProduct(
-                        image: "sx6.jpg",
-                        price: 35.0,
-                        name: "BMW S1000RR Race",
-                      ),
-                      SingleProduct(
-                        image: "sx7.jpg",
-                        price: 70.0,
-                        name: "Ducati Panigale Race",
-                      ),
-                      SingleProduct(
-                        image: "sx1.jpg",
-                        price: 20.0,
-                        name: "Ducati Panigale Race 2",
-                      ),
-                      SingleProduct(
-                        image: "sx3.jpg",
-                        price: 1020.0,
-                        name: "Civic and Ducati",
-                      ),
-                      SingleProduct(
-                        image: "sx5.jpg",
-                        price: 370.0,
-                        name: "Ducati Motor Bike",
-                      ),
-                      SingleProduct(
-                        image: "sx6.jpg",
-                        price: 99.0,
-                        name: "BMW",
-                      ),
-                    ],
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.7,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5),
                   ),
                 ),
               ],

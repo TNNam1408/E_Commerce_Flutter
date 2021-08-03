@@ -19,12 +19,12 @@ class SingleProduct extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Container(
-                height: 180,
+                height: 140,
                 width: 160,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       fit:BoxFit.fill,
-                      image: AssetImage("images/$image")),
+                      image: NetworkImage(image)),
                 ),
               ),
             ),

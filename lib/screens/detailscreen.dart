@@ -59,7 +59,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 color: Colors.blueGrey,
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage("images/${widget.image}"),
+                  image: NetworkImage(widget.image),
                 ),
               ),
             ),
@@ -122,7 +122,7 @@ class _DetailScreenState extends State<DetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Size",
+          "Version ",
           style: myStyle,
         ),
         SizedBox(
@@ -133,10 +133,9 @@ class _DetailScreenState extends State<DetailScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildSizeProduct(name: "S"),
-              _buildSizeProduct(name: "M"),
-              _buildSizeProduct(name: "L"),
-              _buildSizeProduct(name: "XL"),
+              _buildSizeProduct(name: "Uni"),//Universal version
+              _buildSizeProduct(name: "Pre"),//Premium version
+              _buildSizeProduct(name: "LiE"),//Limited Edition
             ],
           ),
         ),

@@ -1,4 +1,4 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/screens/detailscreen.dart';
 import 'package:e_commerce/screens/listproduct.dart';
 import 'package:e_commerce/widgets/singleproduct.dart';
@@ -6,11 +6,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import '../model/product.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
+Product hondaData;
+Product suzukiData;
+
+
+// Product bmwData;
+// Product yamahaData;
+// Product ducatiData;
+// Product kawashakiData;
+
+Product cbr650rData;
+Product r6Data;
 
 class _HomePageState extends State<HomePage> {
   Widget _buildCategoryProduct({String image, int color}) {
@@ -31,6 +44,11 @@ class _HomePageState extends State<HomePage> {
   bool homeColor = true;
 
   bool cartColor = false;
+
+
+  var topProductSnapShot;
+  var newAchiveSnapShot;
+
 
   bool aboutColor = false;
 
@@ -98,21 +116,27 @@ class _HomePageState extends State<HomePage> {
   }
   ////////////////////
 
-  Widget _buildMyDrawer(){
+  Widget _buildMyDrawer() {
     return Drawer(
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("TN Nam",style: TextStyle(color: Colors.black),),
+            accountName: Text(
+              "TN Nam",
+              style: TextStyle(color: Colors.black),
+            ),
             decoration: BoxDecoration(color: Colors.grey[300]),
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage("images/yamahar1.jpg"),
             ),
-            accountEmail: Text("TNNam1408@gmail.com",style: TextStyle(color: Colors.black),),
+            accountEmail: Text(
+              "TNNam1408@gmail.com",
+              style: TextStyle(color: Colors.black),
+            ),
           ),
           ListTile(
             selected: homeColor,
-            onTap: (){
+            onTap: () {
               setState(() {
                 homeColor = true;
                 contantUsColor = false;
@@ -120,12 +144,12 @@ class _HomePageState extends State<HomePage> {
                 cartColor = false;
               });
             },
-            leading:  Icon(Icons.home),
+            leading: Icon(Icons.home),
             title: Text("Home"),
           ),
           ListTile(
             selected: cartColor,
-            onTap: (){
+            onTap: () {
               setState(() {
                 cartColor = true;
                 contantUsColor = false;
@@ -133,12 +157,12 @@ class _HomePageState extends State<HomePage> {
                 homeColor = false;
               });
             },
-            leading:  Icon(Icons.shopping_cart),
+            leading: Icon(Icons.shopping_cart),
             title: Text("Cart"),
           ),
           ListTile(
             selected: aboutColor,
-            onTap: (){
+            onTap: () {
               setState(() {
                 aboutColor = true;
                 contantUsColor = false;
@@ -146,12 +170,12 @@ class _HomePageState extends State<HomePage> {
                 homeColor = false;
               });
             },
-            leading:  Icon(Icons.info),
+            leading: Icon(Icons.info),
             title: Text("About"),
           ),
           ListTile(
             selected: contantUsColor,
-            onTap: (){
+            onTap: () {
               setState(() {
                 contantUsColor = true;
                 aboutColor = false;
@@ -159,21 +183,20 @@ class _HomePageState extends State<HomePage> {
                 homeColor = false;
               });
             },
-            leading:  Icon(Icons.phone),
+            leading: Icon(Icons.phone),
             title: Text("Contant Us"),
           ),
           ListTile(
-            onTap: (){},
-            leading:  Icon(Icons.exit_to_app),
+            onTap: () {},
+            leading: Icon(Icons.exit_to_app),
             title: Text("Logout"),
           ),
-
         ],
       ),
     );
   }
 
-  Widget _buildImageSlide(){
+  Widget _buildImageSlide() {
     return Container(
       height: 240,
       child: Carousel(
@@ -191,7 +214,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategory(){
+  Widget _buildCategory() {
     return Column(
       children: [
         //Categorie
@@ -215,16 +238,11 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildCategoryProduct(
-                  image: "moto.png", color: 0xFF393939),
-              _buildCategoryProduct(
-                  image: "motor.png", color: 0xFF393939),
-              _buildCategoryProduct(
-                  image: "oto.png", color: 0xFF393939),
-              _buildCategoryProduct(
-                  image: "bicycle.png", color: 0xFF393939),
-              _buildCategoryProduct(
-                  image: "set.png", color: 0xFF393939),
+              _buildCategoryProduct(image: "moto.png", color: 0xFF393939),
+              _buildCategoryProduct(image: "motor.png", color: 0xFF393939),
+              _buildCategoryProduct(image: "oto.png", color: 0xFF393939),
+              _buildCategoryProduct(image: "bicycle.png", color: 0xFF393939),
+              _buildCategoryProduct(image: "set.png", color: 0xFF393939),
             ],
           ),
         ),
@@ -232,14 +250,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildFeatured(){
+  Widget _buildTopProduct() {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Featured",
+              "Top Products",
               style: TextStyle(
                   fontSize: 17,
                   color: Colors.black,
@@ -247,10 +265,10 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (ctx) => ListProduct(
-                          name: "Featured",
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (ctx) => ListProduct(
+                          name: "Top Products",
+                          snapShot: topProductSnapShot,
                         )));
               },
               child: Text("View more",
@@ -265,31 +283,33 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
-                  name: "Ducati Motor Bikec",
-                  price: 30.0,
-                  image: "sx1.jpg",
-                )));
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (ctx) => DetailScreen(
+                      name: hondaData.name,
+                      price: hondaData.price,
+                      image: hondaData.image,
+                        )));
               },
               child: SingleProduct(
-                name: "Ducati Motor Bikec",
-                price: 30.0,
-                image: "sx1.jpg",
+                name: hondaData.name,
+                price: hondaData.price,
+                image: hondaData.image,
               ),
             ),
             GestureDetector(
-              onTap: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
-                  name: "Civic and Ducati",
-                  price: 100.0,
-                  image: "sx3.jpg",
-                )));
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (ctx) => DetailScreen(
+                          name: suzukiData.name,
+                          price: suzukiData.price,
+                          image: suzukiData.image,
+                        )));
               },
               child: SingleProduct(
-                name: "Civic and Ducati",
-                price: 100.0,
-                image: "sx3.jpg",
+                name:suzukiData.name,
+                price: suzukiData.price,
+                image: suzukiData.image,
               ),
             ),
           ],
@@ -298,7 +318,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildNewAchives(){
+  Widget _buildNewAchives() {
     return Column(
       children: [
         Container(
@@ -318,10 +338,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (ctx) => ListProduct(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (ctx) => ListProduct(
                                 name: "New Achives",
+                            snapShot: newAchiveSnapShot,
                               )));
                     },
                     child: Text("View more",
@@ -335,7 +355,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
         Row(
           children: [
             Column(
@@ -345,31 +364,33 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
-                          name: "Ducati Interface",
-                          price: 40.0,
-                          image: "sx4.jpg",
-                        )));
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              name: cbr650rData.name,
+                              price: cbr650rData.price,
+                              image: cbr650rData.image,
+                                )));
                       },
                       child: SingleProduct(
-                        name: "Ducati Interface",
-                        price: 40.0,
-                        image: "sx4.jpg",
+                        name: cbr650rData.name,
+                        price: cbr650rData.price,
+                        image: cbr650rData.image,
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>DetailScreen(
-                          name: "Ducati Racing",
-                          price: 1000.0,
-                          image: "sx5.jpg",
-                        )));
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                                  name: r6Data.name,
+                                  price: r6Data.price,
+                                  image: r6Data.image,
+                                )));
                       },
                       child: SingleProduct(
-                        name: "Ducati Racing",
-                        price: 1000.0,
-                        image: "sx5.jpg",
+                        name: r6Data.name,
+                        price: r6Data.price,
+                        image: r6Data.image,
                       ),
                     ),
                   ],
@@ -381,6 +402,7 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -412,33 +434,85 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.notifications_none, color: Colors.black)),
         ],
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        color: Colors.grey[200],
-        child: ListView(
-          children: [
-            Container(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildImageSlide(),
-                  _buildCategory(),
+      body: FutureBuilder(
+          future: Firestore.instance
+              .collection("products")
+              .document("NmosClmieY6PfadcS9Nl")
+              .collection("topproducts")
+              .getDocuments(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            topProductSnapShot = snapshot;
+            hondaData = Product(
+                image: snapshot.data.documents[0]["image"],
+                name: snapshot.data.documents[0]["name"],
+                price: snapshot.data.documents[0]["price"]);
+            print(hondaData);
 
-                  SizedBox(
-                    height: 10,
+            suzukiData = Product(
+                image: snapshot.data.documents[4]["image"],
+                name: snapshot.data.documents[4]["name"],
+                price: snapshot.data.documents[4]["price"]);
+            print(suzukiData);
+
+            return FutureBuilder(
+              future: Firestore.instance
+                  .collection("products")
+                  .document("NmosClmieY6PfadcS9Nl")
+                  .collection("newachives")
+                  .getDocuments(),
+              builder: (context, snapShot) {
+                if (snapShot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                newAchiveSnapShot = snapShot;
+                cbr650rData = Product(
+                    image: snapShot.data.documents[1]["image"],
+                    name: snapShot.data.documents[1]["name"],
+                    price: snapShot.data.documents[1]["price"]);
+                print(cbr650rData);
+
+                r6Data = Product(
+                    image: snapShot.data.documents[4]["image"],
+                    name: snapShot.data.documents[4]["name"],
+                    price: snapShot.data.documents[4]["price"]);
+                print(r6Data);
+
+
+                return Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  color: Colors.grey[200],
+                  child: ListView(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildImageSlide(),
+                            _buildCategory(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            _buildTopProduct(),
+                            _buildNewAchives(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  _buildFeatured(),
-
-                  _buildNewAchives(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+                );
+              }
+            );
+          }),
     );
   }
 }
