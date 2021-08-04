@@ -1,3 +1,5 @@
+import 'package:e_commerce/screens/cartscreen.dart';
+import 'package:e_commerce/screens/homepage.dart';
 import 'package:flutter/material.dart';
 
 class Checkout extends StatefulWidget {
@@ -28,7 +30,7 @@ class _CheckoutState extends State<Checkout> {
                   width: 150,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("images/${widget.image}"),
+                        image: NetworkImage(widget.image),
 
                         fit: BoxFit.fill),
                   ),
@@ -47,7 +49,7 @@ class _CheckoutState extends State<Checkout> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "4 cylinders in line ",
+                          "Performance",
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
@@ -108,15 +110,20 @@ class _CheckoutState extends State<Checkout> {
         ),
         backgroundColor: Colors.grey[400],
         elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            // Navigator.of(context).pushReplacement(
-            //     MaterialPageRoute(builder: (ctx) => HomePage()));
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     // Navigator.of(context).pushReplacement(
+        //     //     MaterialPageRoute(builder: (ctx) => CartScreen()));
+        //     Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (ctx) => HomePage()));
+        //   },
+        //   icon: Icon(
+        //     Icons.arrow_back,
+        //     color: Colors.black,
+        //   ),
+        // ),
+        iconTheme: IconThemeData(
+            color: Colors.black
         ),
         actions: [
           IconButton(

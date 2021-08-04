@@ -1,3 +1,5 @@
+import 'package:e_commerce/provider/category_provider.dart';
+import 'package:e_commerce/provider/product_provider.dart';
 import 'package:e_commerce/screens/cartscreen.dart';
 import 'package:e_commerce/screens/checkout.dart';
 import 'package:e_commerce/screens/detailscreen.dart';
@@ -8,6 +10,7 @@ import 'package:e_commerce/screens/signup.dart';
 import 'package:e_commerce/screens/welcomescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,15 +27,25 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.onAuthStateChanged,
-        builder: (ctx,snapshop){
-          if(snapshop.hasData){
-            return HomePage();
-          }else{
-            return Login();
-          }
-        },
+      home: MultiProvider(
+        providers: [
+          ListenableProvider<ProductProvider>(
+            create: (ctx) => ProductProvider(),
+          ),
+          ListenableProvider<CategoryProvider>(
+            create: (ctx) => CategoryProvider(),
+          ),
+        ],
+        child: StreamBuilder(
+          stream: FirebaseAuth.instance.onAuthStateChanged,
+          builder: (ctx, snapshop) {
+            if (snapshop.hasData) {
+              return HomePage();
+            } else {
+              return Login();
+            }
+          },
+        ),
       ),
     );
   }

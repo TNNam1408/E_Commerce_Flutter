@@ -1,10 +1,11 @@
+import 'package:e_commerce/model/product.dart';
 import 'package:e_commerce/screens/homepage.dart';
 import 'package:e_commerce/widgets/singleproduct.dart';
 import 'package:flutter/material.dart';
 
 class ListProduct extends StatelessWidget {
   final String name;
-  final snapShot;
+  final List<Product> snapShot;
   ListProduct({this.name, this.snapShot});
   @override
   Widget build(BuildContext context) {
@@ -16,15 +17,8 @@ class ListProduct extends StatelessWidget {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (ctx) => HomePage()));
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+        iconTheme: IconThemeData(
+          color: Colors.black
         ),
         actions: [
           IconButton(
@@ -70,21 +64,19 @@ class ListProduct extends StatelessWidget {
                 Container(
                   color: Colors.grey[500],
                   height: 500,
-                  child: GridView.builder(
-
-                    itemCount: snapShot.data.documents.length,
-                    itemBuilder: (ctx, index) => SingleProduct(
-                      name: snapShot.data.documents[index]["name"],
-                      price: snapShot.data.documents[index]["price"],
-                      image: snapShot.data.documents[index]["image"],
-                    ),
-
+                  child: GridView.count(
                     scrollDirection: Axis.vertical,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.7,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5),
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                    children: snapShot
+                        .map(
+                          (e) => SingleProduct(
+                            image: e.image,
+                            name: e.name,
+                            price: e.price,
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ],

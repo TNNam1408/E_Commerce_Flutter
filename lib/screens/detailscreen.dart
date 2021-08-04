@@ -233,7 +233,7 @@ class _DetailScreenState extends State<DetailScreen> {
           style: myStyle,
         ),
         onPressed: () {
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).push(
               MaterialPageRoute(builder: (ctx) => CartScreen(
                 name: widget.name,
                 image: widget.image,
@@ -255,15 +255,18 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
         backgroundColor: Colors.grey[400],
         elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (ctx) => HomePage()));
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (ctx) => HomePage()));
+        //   },
+        //   icon: Icon(
+        //     Icons.arrow_back,
+        //     color: Colors.black,
+        //   ),
+        // ),
+        iconTheme: IconThemeData(
+            color: Colors.black
         ),
         actions: [
           IconButton(

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/provider/category_provider.dart';
+import 'package:e_commerce/provider/product_provider.dart';
 import 'package:e_commerce/screens/detailscreen.dart';
 import 'package:e_commerce/screens/listproduct.dart';
 import 'package:e_commerce/widgets/singleproduct.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:provider/provider.dart';
 import '../model/product.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,14 +16,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+CategoryProvider categoryProvider;
+ProductProvider productProvider;
+
 Product hondaData;
 Product suzukiData;
-
-
-// Product bmwData;
-// Product yamahaData;
-// Product ducatiData;
-// Product kawashakiData;
 
 Product cbr650rData;
 Product r6Data;
@@ -45,76 +45,11 @@ class _HomePageState extends State<HomePage> {
 
   bool cartColor = false;
 
-
-  var topProductSnapShot;
-  var newAchiveSnapShot;
-
-
   bool aboutColor = false;
 
   bool contantUsColor = false;
 
   // bool logoutColor = true;
-
-////////////
-  Widget _buildButhFeaOrNewProduct() {
-    return Column(
-      children: [
-        Container(
-          height: 50,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Featured",
-                    style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text("See All",
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold)),
-                ],
-              ),
-            ],
-          ),
-        ),
-
-        //View moto and car
-        Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SingleProduct(
-                      name: "Ducati Motor Bikec",
-                      price: 30.0,
-                      image: "sx1.jpg",
-                    ),
-                    SingleProduct(
-                      name: "Civic and Ducati",
-                      price: 100.0,
-                      image: "sx3.jpg",
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-  ////////////////////
 
   Widget _buildMyDrawer() {
     return Drawer(
@@ -215,6 +150,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategory() {
+    List<Product> performance = categoryProvider.getPerformanceList;
+    List<Product> motor = categoryProvider.getMotorList;
+    List<Product> car = categoryProvider.getCarList;
+    List<Product> bicycle = categoryProvider.getBicycleList;
+    List<Product> logistics = categoryProvider.getLogisticsList;
+
     return Column(
       children: [
         //Categorie
@@ -238,11 +179,61 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildCategoryProduct(image: "moto.png", color: 0xFF393939),
-              _buildCategoryProduct(image: "motor.png", color: 0xFF393939),
-              _buildCategoryProduct(image: "oto.png", color: 0xFF393939),
-              _buildCategoryProduct(image: "bicycle.png", color: 0xFF393939),
-              _buildCategoryProduct(image: "set.png", color: 0xFF393939),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => ListProduct(
+                            name: "Performance",
+                            snapShot: performance,
+                          )));
+                },
+                child: _buildCategoryProduct(
+                    image: "performance.png", color: 0xFF393939),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => ListProduct(
+                            name: "Motor",
+                            snapShot: motor,
+                          )));
+                },
+                child: _buildCategoryProduct(
+                    image: "motor.png", color: 0xFF393939),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => ListProduct(
+                            name: "Car",
+                            snapShot: car,
+                          )));
+                },
+                child:
+                    _buildCategoryProduct(image: "car.png", color: 0xFF393939),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => ListProduct(
+                            name: "Bicycle",
+                            snapShot: bicycle,
+                          )));
+                },
+                child: _buildCategoryProduct(
+                    image: "bicycle.png", color: 0xFF393939),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => ListProduct(
+                            name: "Logistics",
+                            snapShot: logistics,
+                          )));
+                },
+                child: _buildCategoryProduct(
+                    image: "logistics.png", color: 0xFF393939),
+              ),
             ],
           ),
         ),
@@ -251,6 +242,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildTopProduct() {
+    List<Product> topproducts = productProvider.getTopProductsList;
+    List<Product> hometopproduct = productProvider.getHomeTopProductList;
+
     return Column(
       children: [
         Row(
@@ -265,10 +259,10 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => ListProduct(
                           name: "Top Products",
-                          snapShot: topProductSnapShot,
+                          snapShot: topproducts,
                         )));
               },
               child: Text("View more",
@@ -279,46 +273,101 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        // Row(
+        //   children: [
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //           children: [
+        //             GestureDetector(
+        //               onTap: () {
+        //                 Navigator.of(context).push(MaterialPageRoute(
+        //                     builder: (ctx) => DetailScreen(
+        //                       name: topproducts.elementAt(0).name,
+        //                       price: topproducts.elementAt(0).price,
+        //                       image:topproducts.elementAt(0).image,
+        //                     )));
+        //               },
+        //               child: SingleProduct(
+        //                 name: topproducts.elementAt(0).name,
+        //                 price: topproducts.elementAt(0).price,
+        //                 image:topproducts.elementAt(0).image,
+        //               ),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 Navigator.of(context).push(MaterialPageRoute(
+        //                     builder: (ctx) => DetailScreen(
+        //                       name: topproducts.elementAt(1).name,
+        //                       price: topproducts.elementAt(1).price,
+        //                       image:topproducts.elementAt(1).image,
+        //                     )));
+        //               },
+        //               child: SingleProduct(
+        //                 name: topproducts.elementAt(1).name,
+        //                 price: topproducts.elementAt(1).price,
+        //                 image:topproducts.elementAt(1).image,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (ctx) => DetailScreen(
-                      name: hondaData.name,
-                      price: hondaData.price,
-                      image: hondaData.image,
-                        )));
-              },
-              child: SingleProduct(
-                name: hondaData.name,
-                price: hondaData.price,
-                image: hondaData.image,
+          children: hometopproduct.map((e){
+            return Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => DetailScreen(
+                              name: e.name,
+                              price: e.price,
+                              image: e.image,
+                            )));
+                      },
+                      child: SingleProduct(
+                        name: e.name,
+                        price: e.price,
+                        image: e.image,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => DetailScreen(
+                            name: e.name,
+                            price: e.price,
+                            image: e.image,
+                          )));
+                    },
+                    child: SingleProduct(
+                      name: e.name,
+                      price: e.price,
+                      image: e.image,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (ctx) => DetailScreen(
-                          name: suzukiData.name,
-                          price: suzukiData.price,
-                          image: suzukiData.image,
-                        )));
-              },
-              child: SingleProduct(
-                name:suzukiData.name,
-                price: suzukiData.price,
-                image: suzukiData.image,
-              ),
-            ),
-          ],
+            );
+          }).toList(),
         ),
       ],
     );
   }
 
   Widget _buildNewAchives() {
+    List<Product> newachives = productProvider.getNewAchivesList;
+    List<Product> homeachive = productProvider.getHomeAchiveList;
     return Column(
       children: [
         Container(
@@ -338,10 +387,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => ListProduct(
                                 name: "New Achives",
-                            snapShot: newAchiveSnapShot,
+                                snapShot: newachives,
                               )));
                     },
                     child: Text("View more",
@@ -355,49 +404,92 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+        // Row(
+        //   children: [
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //           children: [
+        //             GestureDetector(
+        //               onTap: () {
+        //                 Navigator.of(context).push(MaterialPageRoute(
+        //                     builder: (ctx) => DetailScreen(
+        //                           name: newachives.elementAt(11).name,
+        //                           price: newachives.elementAt(11).price,
+        //                           image: newachives.elementAt(11).image,
+        //                         )));
+        //               },
+        //               child: SingleProduct(
+        //                 name: newachives.elementAt(11).name,
+        //                 price: newachives.elementAt(11).price,
+        //                 image: newachives.elementAt(11).image,
+        //               ),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 Navigator.of(context).push(MaterialPageRoute(
+        //                     builder: (ctx) => DetailScreen(
+        //                           name: newachives.elementAt(1).name,
+        //                           price: newachives.elementAt(1).price,
+        //                           image: newachives.elementAt(1).image,
+        //                         )));
+        //               },
+        //               child: SingleProduct(
+        //                 name: newachives.elementAt(1).name,
+        //                 price: newachives.elementAt(1).price,
+        //                 image: newachives.elementAt(1).image,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
         Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: homeachive.map((e) {
+            return Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        Navigator.of(context).push(MaterialPageRoute(
                             builder: (ctx) => DetailScreen(
-                              name: cbr650rData.name,
-                              price: cbr650rData.price,
-                              image: cbr650rData.image,
-                                )));
+                              name: e.name,
+                              price: e.price,
+                              image: e.image,
+                            )));
                       },
                       child: SingleProduct(
-                        name: cbr650rData.name,
-                        price: cbr650rData.price,
-                        image: cbr650rData.image,
+                        name: e.name,
+                        price: e.price,
+                        image: e.image,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (ctx) => DetailScreen(
-                                  name: r6Data.name,
-                                  price: r6Data.price,
-                                  image: r6Data.image,
-                                )));
-                      },
-                      child: SingleProduct(
-                        name: r6Data.name,
-                        price: r6Data.price,
-                        image: r6Data.image,
-                      ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => DetailScreen(
+                            name: e.name,
+                            price: e.price,
+                            image: e.image,
+                          )));
+                    },
+                    child: SingleProduct(
+                      name: e.name,
+                      price: e.price,
+                      image: e.image,
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -407,6 +499,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    categoryProvider = Provider.of<CategoryProvider>(context);
+    categoryProvider.getPerformanceData();
+    categoryProvider.getMotorData();
+    categoryProvider.getCarData();
+    categoryProvider.getBicycleData();
+    categoryProvider.getLogisticsData();
+
+    productProvider = Provider.of<ProductProvider>(context);
+    productProvider.getTopProductsData();
+    productProvider.getNewAchivesData();
+    productProvider.getHomeTopProductData();
+    productProvider.getHomeAchiveData();
+
+
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: _buildMyDrawer(),
@@ -434,85 +541,31 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.notifications_none, color: Colors.black)),
         ],
       ),
-      body: FutureBuilder(
-          future: Firestore.instance
-              .collection("products")
-              .document("NmosClmieY6PfadcS9Nl")
-              .collection("topproducts")
-              .getDocuments(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            topProductSnapShot = snapshot;
-            hondaData = Product(
-                image: snapshot.data.documents[0]["image"],
-                name: snapshot.data.documents[0]["name"],
-                price: snapshot.data.documents[0]["price"]);
-            print(hondaData);
-
-            suzukiData = Product(
-                image: snapshot.data.documents[4]["image"],
-                name: snapshot.data.documents[4]["name"],
-                price: snapshot.data.documents[4]["price"]);
-            print(suzukiData);
-
-            return FutureBuilder(
-              future: Firestore.instance
-                  .collection("products")
-                  .document("NmosClmieY6PfadcS9Nl")
-                  .collection("newachives")
-                  .getDocuments(),
-              builder: (context, snapShot) {
-                if (snapShot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                newAchiveSnapShot = snapShot;
-                cbr650rData = Product(
-                    image: snapShot.data.documents[1]["image"],
-                    name: snapShot.data.documents[1]["name"],
-                    price: snapShot.data.documents[1]["price"]);
-                print(cbr650rData);
-
-                r6Data = Product(
-                    image: snapShot.data.documents[4]["image"],
-                    name: snapShot.data.documents[4]["name"],
-                    price: snapShot.data.documents[4]["price"]);
-                print(r6Data);
-
-
-                return Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  color: Colors.grey[200],
-                  child: ListView(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildImageSlide(),
-                            _buildCategory(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            _buildTopProduct(),
-                            _buildNewAchives(),
-                          ],
-                        ),
-                      ),
-                    ],
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        color: Colors.grey[200],
+        child: ListView(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildImageSlide(),
+                  _buildCategory(),
+                  SizedBox(
+                    height: 10,
                   ),
-                );
-              }
-            );
-          }),
+                  _buildTopProduct(),
+                 _buildNewAchives(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

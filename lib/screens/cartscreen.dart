@@ -1,5 +1,6 @@
 
 import 'package:e_commerce/screens/checkout.dart';
+import 'package:e_commerce/screens/detailscreen.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
@@ -35,7 +36,7 @@ class _CartScreenState extends State<CartScreen> {
                   width: 150,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("images/${widget.image}"),
+                        image: NetworkImage(widget.image),
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -53,7 +54,7 @@ class _CartScreenState extends State<CartScreen> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "4 cylinders in line ",
+                          "Performance",
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
@@ -105,24 +106,6 @@ class _CartScreenState extends State<CartScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        // Container(
-                        //   height: 38,
-                        //   width: double.infinity,
-                        //   // ignore: deprecated_member_use
-                        //   child: RaisedButton(
-                        //     shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(20)),
-                        //     color: Colors.pink,
-                        //     child: Text(
-                        //       "Check Out",
-                        //       style:  TextStyle(
-                        //             fontSize: 18,
-                        //             color: Colors.black,
-                        //             fontWeight: FontWeight.bold),
-                        //     ),
-                        //     onPressed: () {},
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -148,7 +131,7 @@ class _CartScreenState extends State<CartScreen> {
           color: Color(0xff746bc9),
             child: Text("Comtinous", style: myStyle,),
             onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=>Checkout(
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>Checkout(
               image: widget.image,
               name: widget.name,
               price: widget.price,
@@ -164,15 +147,20 @@ class _CartScreenState extends State<CartScreen> {
         ),
         backgroundColor: Colors.grey[400],
         elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            // Navigator.of(context).pushReplacement(
-            //     MaterialPageRoute(builder: (ctx) => HomePage()));
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     // Navigator.of(context).pushReplacement(
+        //     //     MaterialPageRoute(builder: (ctx) => DetailScreen()));
+        //     Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (ctx) => HomePage()));
+        //   },
+        //   icon: Icon(
+        //     Icons.arrow_back,
+        //     color: Colors.black,
+        //   ),
+        // ),
+        iconTheme: IconThemeData(
+            color: Colors.black
         ),
         actions: [
           IconButton(
