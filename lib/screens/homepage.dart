@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/model/categoryicon.dart';
 import 'package:e_commerce/provider/category_provider.dart';
 import 'package:e_commerce/provider/product_provider.dart';
 import 'package:e_commerce/screens/detailscreen.dart';
@@ -35,9 +36,105 @@ class _HomePageState extends State<HomePage> {
         height: 40,
         child: Image(
           color: Colors.white,
-          image: AssetImage("images/$image"),
+          image: NetworkImage(image),
         ),
       ),
+    );
+  }
+  //Category Icon
+  Widget _BuildPreformanceIcon(){
+    List<Product> performance = categoryProvider.getPerformanceList;
+    List<CategoryIcon> performanceIcon = categoryProvider.getPerformanceIconList;
+    return Row(
+      children: performanceIcon.map((e) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => ListProduct(
+                  name: "Performance",
+                  snapShot: performance,
+                )));
+          },
+          child: _buildCategoryProduct(
+              image:e.image, color: 0xFF393939),
+        );
+      }).toList(),
+    );
+  }
+  Widget _BuildMotorIconIcon(){
+    List<Product> motor = categoryProvider.getMotorList;
+    List<CategoryIcon> motorIcon = categoryProvider.getMotorIconList;
+    return Row(
+      children: motorIcon.map((e) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => ListProduct(
+                  name: "Motor",
+                  snapShot: motor,
+                )));
+          },
+          child: _buildCategoryProduct(
+              image:e.image, color: 0xFF393939),
+        );
+      }).toList(),
+    );
+  }
+  Widget _BuildCarIconIcon(){
+    List<Product> car = categoryProvider.getCarList;
+    List<CategoryIcon> carIcon = categoryProvider.getCarIconList;
+    return Row(
+      children: carIcon.map((e) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => ListProduct(
+                  name: "Car",
+                  snapShot: car,
+                )));
+          },
+          child: _buildCategoryProduct(
+              image:e.image, color: 0xFF393939),
+        );
+      }).toList(),
+    );
+  }
+  Widget _BuildBicycleIconIcon(){
+    List<Product> bicycle = categoryProvider.getBicycleList;
+    List<CategoryIcon> bicycleIcon = categoryProvider.getBicycleIconList;
+    return Row(
+      children: bicycleIcon.map((e) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => ListProduct(
+                  name: "Bicycle",
+                  snapShot: bicycle,
+                )));
+          },
+          child: _buildCategoryProduct(
+              image:e.image, color: 0xFF393939),
+        );
+      }).toList(),
+    );
+  }
+  Widget _BuildLogisticsIconIcon(){
+    List<Product> logistics = categoryProvider.getLogisticsList;
+    List<CategoryIcon> logisticsIcon = categoryProvider.getLogisticsIconList;
+    return Row(
+      children: logisticsIcon.map((e) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => ListProduct(
+                  name: "Logistics",
+                  snapShot: logistics,
+                )));
+          },
+          child: _buildCategoryProduct(
+              image:e.image, color: 0xFF393939),
+        );
+      }).toList(),
     );
   }
 
@@ -150,12 +247,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategory() {
-    List<Product> performance = categoryProvider.getPerformanceList;
-    List<Product> motor = categoryProvider.getMotorList;
-    List<Product> car = categoryProvider.getCarList;
-    List<Product> bicycle = categoryProvider.getBicycleList;
-    List<Product> logistics = categoryProvider.getLogisticsList;
-
+    // List<Product> performance = categoryProvider.getPerformanceList;
+    // List<Product> motor = categoryProvider.getMotorList;
+    // List<Product> car = categoryProvider.getCarList;
+    // List<Product> bicycle = categoryProvider.getBicycleList;
+    // List<Product> logistics = categoryProvider.getLogisticsList;
+    // List<CategoryIcon> performanceIcon = categoryProvider.getPerformanceIconList;
+    // List<CategoryIcon> motorIcon = categoryProvider.getMotorIconList;
+    // List<CategoryIcon> carIcon = categoryProvider.getCarIconList;
+    // List<CategoryIcon> bicycleIcon = categoryProvider.getBicycleIconList;
+    // List<CategoryIcon> logisticsIcon = categoryProvider.getLogisticsIconList;
     return Column(
       children: [
         //Categorie
@@ -179,61 +280,23 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => ListProduct(
-                            name: "Performance",
-                            snapShot: performance,
-                          )));
-                },
-                child: _buildCategoryProduct(
-                    image: "performance.png", color: 0xFF393939),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => ListProduct(
-                            name: "Motor",
-                            snapShot: motor,
-                          )));
-                },
-                child: _buildCategoryProduct(
-                    image: "motor.png", color: 0xFF393939),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => ListProduct(
-                            name: "Car",
-                            snapShot: car,
-                          )));
-                },
-                child:
-                    _buildCategoryProduct(image: "car.png", color: 0xFF393939),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => ListProduct(
-                            name: "Bicycle",
-                            snapShot: bicycle,
-                          )));
-                },
-                child: _buildCategoryProduct(
-                    image: "bicycle.png", color: 0xFF393939),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => ListProduct(
-                            name: "Logistics",
-                            snapShot: logistics,
-                          )));
-                },
-                child: _buildCategoryProduct(
-                    image: "logistics.png", color: 0xFF393939),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //         builder: (ctx) => ListProduct(
+              //           name: "Performance",
+              //           snapShot: performance,
+              //         )));
+              //   },
+              //   child: _buildCategoryProduct(
+              //       image:performanceIcon[0].image, color: 0xFF393939),
+              // ),
+
+              _BuildPreformanceIcon(),
+              _BuildMotorIconIcon(),
+              _BuildCarIconIcon(),
+              _BuildBicycleIconIcon(),
+              _BuildLogisticsIconIcon(),
             ],
           ),
         ),
@@ -505,6 +568,13 @@ class _HomePageState extends State<HomePage> {
     categoryProvider.getCarData();
     categoryProvider.getBicycleData();
     categoryProvider.getLogisticsData();
+    ///Icon Category Data
+    categoryProvider.getPerformanceIconData();
+    categoryProvider.getMotorIconData();
+    categoryProvider.getCarIconData();
+    categoryProvider.getBicycleIconData();
+    categoryProvider.getLogisticIconData();
+
 
     productProvider = Provider.of<ProductProvider>(context);
     productProvider.getTopProductsData();

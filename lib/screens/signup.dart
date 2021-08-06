@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'homepage.dart';
 import 'login.dart';
 
 
@@ -131,6 +132,8 @@ class _SignUpState extends State<SignUp> {
             name: "REGISTER",
             onPressed: (){
               vaildation();
+              // Navigator.of(context).pushReplacement(
+              //     MaterialPageRoute(builder: (cxt) => HomePage()));
             },
           ),
           ChangeScreen(

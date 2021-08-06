@@ -1,8 +1,22 @@
+import 'package:e_commerce/model/categoryicon.dart';
 import 'package:e_commerce/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryProvider with ChangeNotifier {
+
+  List<CategoryIcon> performanIcon = [];
+  CategoryIcon performanIconData;
+  List<CategoryIcon> motorIcon = [];
+  CategoryIcon motorIconData;
+  List<CategoryIcon> carIcon = [];
+  CategoryIcon carIconData;
+  List<CategoryIcon> bicycleIcon = [];
+  CategoryIcon bicycleIconData;
+  List<CategoryIcon> logisticsIcon = [];
+  CategoryIcon logisticsIconData;
+
+
   List<Product> performance = [];
   Product performanceData;
 
@@ -17,6 +31,111 @@ class CategoryProvider with ChangeNotifier {
 
   List<Product> logistics = [];
   Product logisticsData;
+
+  Future<void> getPerformanceIconData() async {
+    List<CategoryIcon> newList = [];
+    QuerySnapshot performanceIconSnapShot = await Firestore.instance
+        .collection("categoryicon")
+        .document("Nhp70bJXxmTSUISd9jWp")
+        .collection("performance")
+        .getDocuments();
+    performanceIconSnapShot.documents.forEach(
+          (element) {
+        performanIconData = CategoryIcon(
+            image: element.data["image"]);
+        newList.add(performanIconData);
+      },
+    );
+    performanIcon = newList;
+    notifyListeners();
+  }
+  List<CategoryIcon> get getPerformanceIconList{
+    return performanIcon;
+  }
+
+  Future<void> getMotorIconData() async {
+    List<CategoryIcon> newList = [];
+    QuerySnapshot motorIconSnapShot = await Firestore.instance
+        .collection("categoryicon")
+        .document("Nhp70bJXxmTSUISd9jWp")
+        .collection("motor")
+        .getDocuments();
+    motorIconSnapShot.documents.forEach(
+          (element) {
+        motorIconData = CategoryIcon(
+            image: element.data["image"]);
+        newList.add(motorIconData);
+      },
+    );
+    motorIcon = newList;
+    notifyListeners();
+  }
+  List<CategoryIcon> get getMotorIconList{
+    return motorIcon;
+  }
+
+  Future<void> getCarIconData() async {
+    List<CategoryIcon> newList = [];
+    QuerySnapshot carIconSnapShot = await Firestore.instance
+        .collection("categoryicon")
+        .document("Nhp70bJXxmTSUISd9jWp")
+        .collection("car")
+        .getDocuments();
+    carIconSnapShot.documents.forEach(
+          (element) {
+        carIconData = CategoryIcon(
+            image: element.data["image"]);
+        newList.add(carIconData);
+      },
+    );
+    carIcon = newList;
+    notifyListeners();
+  }
+  List<CategoryIcon> get getCarIconList{
+    return carIcon;
+  }
+
+  Future<void> getBicycleIconData() async {
+    List<CategoryIcon> newList = [];
+    QuerySnapshot bicycleIconSnapShot = await Firestore.instance
+        .collection("categoryicon")
+        .document("Nhp70bJXxmTSUISd9jWp")
+        .collection("bicycle")
+        .getDocuments();
+    bicycleIconSnapShot.documents.forEach(
+          (element) {
+        bicycleIconData = CategoryIcon(
+            image: element.data["image"]);
+        newList.add(bicycleIconData);
+      },
+    );
+    bicycleIcon = newList;
+    notifyListeners();
+  }
+  List<CategoryIcon> get getBicycleIconList{
+    return bicycleIcon;
+  }
+
+  Future<void> getLogisticIconData() async {
+    List<CategoryIcon> newList = [];
+    QuerySnapshot logisticIconSnapShot = await Firestore.instance
+        .collection("categoryicon")
+        .document("Nhp70bJXxmTSUISd9jWp")
+        .collection("logistic")
+        .getDocuments();
+    logisticIconSnapShot.documents.forEach(
+          (element) {
+        logisticsIconData = CategoryIcon(
+            image: element.data["image"]);
+        newList.add(logisticsIconData);
+      },
+    );
+    logisticsIcon = newList;
+    notifyListeners();
+  }
+  List<CategoryIcon> get getLogisticsIconList{
+    return logisticsIcon;
+  }
 
   Future<void> getPerformanceData() async {
     List<Product> newList = [];

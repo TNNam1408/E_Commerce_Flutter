@@ -18,8 +18,6 @@ class ProductProvider with ChangeNotifier{
   Future<void> getHomeTopProductData() async {
     List<Product> newList = [];
     QuerySnapshot hometopproductSnapShot = await Firestore.instance
-        .collection("products")
-        .document("NmosClmieY6PfadcS9Nl")
         .collection("hometopproduct")
         .getDocuments();
     hometopproductSnapShot.documents.forEach(
@@ -41,9 +39,7 @@ class ProductProvider with ChangeNotifier{
   Future<void> getHomeAchiveData() async {
     List<Product> newList = [];
     QuerySnapshot homeachiveSnapShot = await Firestore.instance
-        .collection("products")
-        .document("NmosClmieY6PfadcS9Nl")
-        .collection("homechives")
+        .collection("homeachives")
         .getDocuments();
     homeachiveSnapShot.documents.forEach(
           (element) {
