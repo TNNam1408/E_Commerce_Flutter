@@ -245,8 +245,15 @@ class _DetailScreenState extends State<DetailScreen> {
 
 
   @override
+  void initState() {
+    productProvider = Provider.of<ProductProvider>(context);
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    //productProvider = Provider.of<ProductProvider>(context);
+//comment vào bác nhỉ
+    // productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

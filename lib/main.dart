@@ -27,6 +27,16 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      routes: {
+        '../screens/homepage': (context) => HomePage(),
+        '../screens/detailscreen': (context) => DetailScreen(),
+        '../screens/checkout': (context) => Checkout(),
+        '../screens/cartscreen': (context) => CartScreen(),
+        '../screens/listproduct': (context) => ListProduct(),
+        '../screens/login': (context) => Login(),
+        '../screens/signup': (context) => SignUp(),
+        '../screens/welcomescreen': (context) => WelComeScreen(),
+      },
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider<ProductProvider>(
@@ -36,6 +46,12 @@ class MyApp extends StatelessWidget {
             create: (ctx) => CategoryProvider(),
           ),
         ],
+
+        //Bac viet nhu nay, thi moi provier cho man hinh home va man hinh login thoi
+        //bac dung thuoc tinh ongenerate route trong Material de init Route bac nhe
+        //Cái này e cũng k hiểu lắm
+        //Bác sử lí giúp e với ạ
+
         child: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (ctx, snapshop) {
@@ -49,4 +65,15 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+//Dai loai cho nay bac dang lam sai roi
+class Routes {
+  static Route routes(RouteSettings settings) {
+    switch(settings.name) {
+      case 'home':
+
+    }
+  }
+
 }
