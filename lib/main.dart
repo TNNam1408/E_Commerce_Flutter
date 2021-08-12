@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
       ),
       home: MultiProvider(
         providers: [
-          ListenableProvider<ProductProvider>(
+          ChangeNotifierProvider<ProductProvider>(
             create: (ctx) => ProductProvider(),
           ),
-          ListenableProvider<CategoryProvider>(
+          ChangeNotifierProvider<CategoryProvider>(
             create: (ctx) => CategoryProvider(),
           ),
         ],

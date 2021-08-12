@@ -34,11 +34,13 @@ class CategoryProvider with ChangeNotifier {
 
   Future<void> getPerformanceIconData() async {
     List<CategoryIcon> newList = [];
+    // ignore: deprecated_member_use
     QuerySnapshot performanceIconSnapShot = await Firestore.instance
         .collection("categoryicon")
         .document("Nhp70bJXxmTSUISd9jWp")
         .collection("performance")
         .getDocuments();
+    // ignore: deprecated_member_use
     performanceIconSnapShot.documents.forEach(
           (element) {
         performanIconData = CategoryIcon(

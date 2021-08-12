@@ -1,125 +1,27 @@
-
-import 'package:e_commerce/screens/checkout.dart';
-import 'package:e_commerce/screens/detailscreen.dart';
+import 'package:e_commerce/provider/product_provider.dart';
+import 'package:e_commerce/widgets/cartsingleproduct.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'homepage.dart';
 
 class CartScreen extends StatefulWidget {
-  final double price;
-  final String name;
-  final String image;
-
-  CartScreen({this.price, this.name, this.image});
-
+  // final String image;
+  // final String name;
+  // final double price;
+  // final int quentity;
+  //
+  // CartScreen({this.image, this.name, this.price, this.quentity});
   @override
   _CartScreenState createState() => _CartScreenState();
 }
-
+ProductProvider productProvider;
 class _CartScreenState extends State<CartScreen> {
-  int count = 1;
-
   final TextStyle myStyle = TextStyle(fontSize: 20, color: Colors.white);
-
-  Widget _buildSingleCartProduct() {
-    return Container(
-      height: 150,
-      width: double.infinity,
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 130,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(widget.image),
-                        fit: BoxFit.fill),
-                  ),
-                ),
-                Container(
-                  height: 140,
-                  width: 200,
-                  child: ListTile(
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.name,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Performance",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Text(
-                          "\$ ${widget.price.toString()} ",
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xff9b96d6),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                          height: 35,
-                          width: 120,
-                          // decoration: BoxDecoration(
-                          //   color: Colors.grey[300],
-                          //   borderRadius: BorderRadius.circular(20),
-                          // ),
-                          color: Color(0xfff2f2f2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    if (count > 1) {
-                                      count--;
-                                    }
-                                  });
-                                },
-                                child: Icon(Icons.remove),
-                              ),
-                              Text(
-                                count.toString(),
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    count++;
-                                  });
-                                },
-                                child: Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       bottomNavigationBar: Container(
         height: 60,
@@ -129,15 +31,14 @@ class _CartScreenState extends State<CartScreen> {
         // ignore: deprecated_member_use
         child: RaisedButton(
           color: Color(0xff746bc9),
-            child: Text("Comtinous", style: myStyle,),
-            onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>Checkout(
-              image: widget.image,
-              name: widget.name,
-              price: widget.price,
-            )));
-            },
-            ),
+          child: Text(
+            "Comtinous",
+            style: myStyle,
+          ),
+          onPressed: () {
+
+          },
+        ),
       ),
       appBar: AppBar(
         centerTitle: true,
@@ -159,9 +60,9 @@ class _CartScreenState extends State<CartScreen> {
         //     color: Colors.black,
         //   ),
         // ),
-        iconTheme: IconThemeData(
-            color: Colors.black
-        ),
+
+        iconTheme: IconThemeData(color: Colors.black),
+
         actions: [
           IconButton(
             onPressed: () {},
@@ -172,21 +73,14 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ],
       ),
-      body: ListView(
-        children: [
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-          _buildSingleCartProduct(),
-        ],
+      body: ListView.builder(
+        itemCount:  productProvider.getCartModelListLength,
+        itemBuilder: (ctx, index) => CartSingleProduct(
+          image:  productProvider.getCartModelList[index].image,
+          name:  productProvider.getCartModelList[index].name,
+          price:  productProvider.getCartModelList[index].price,
+          quentity:  productProvider.getCartModelList[index].quentity,
+        ),
       ),
     );
   }

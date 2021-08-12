@@ -247,16 +247,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategory() {
-    // List<Product> performance = categoryProvider.getPerformanceList;
-    // List<Product> motor = categoryProvider.getMotorList;
-    // List<Product> car = categoryProvider.getCarList;
-    // List<Product> bicycle = categoryProvider.getBicycleList;
-    // List<Product> logistics = categoryProvider.getLogisticsList;
-    // List<CategoryIcon> performanceIcon = categoryProvider.getPerformanceIconList;
-    // List<CategoryIcon> motorIcon = categoryProvider.getMotorIconList;
-    // List<CategoryIcon> carIcon = categoryProvider.getCarIconList;
-    // List<CategoryIcon> bicycleIcon = categoryProvider.getBicycleIconList;
-    // List<CategoryIcon> logisticsIcon = categoryProvider.getLogisticsIconList;
     return Column(
       children: [
         //Categorie
@@ -303,6 +293,8 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
+  //bac bo cai provodr ra ngoai ham build di
 
   Widget _buildTopProduct() {
     List<Product> topproducts = productProvider.getTopProductsList;
@@ -404,21 +396,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => DetailScreen(
-                            name: e.name,
-                            price: e.price,
-                            image: e.image,
-                          )));
-                    },
-                    child: SingleProduct(
-                      name: e.name,
-                      price: e.price,
-                      image: e.image,
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //         builder: (ctx) => DetailScreen(
+                  //           name: e.name,
+                  //           price: e.price,
+                  //           image: e.image,
+                  //         )));
+                  //   },
+                  //   child: SingleProduct(
+                  //     name: e.name,
+                  //     price: e.price,
+                  //     image: e.image,
+                  //   ),
+                  // ),
                 ],
               ),
             );
@@ -534,21 +526,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => DetailScreen(
-                            name: e.name,
-                            price: e.price,
-                            image: e.image,
-                          )));
-                    },
-                    child: SingleProduct(
-                      name: e.name,
-                      price: e.price,
-                      image: e.image,
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (ctx) => DetailScreen(
+                  //           name: e.name,
+                  //           price: e.price,
+                  //           image: e.image,
+                  //         )));
+                  //   },
+                  //   child: SingleProduct(
+                  //     name: e.name,
+                  //     price: e.price,
+                  //     image: e.image,
+                  //   ),
+                  // ),
                 ],
               ),
             );

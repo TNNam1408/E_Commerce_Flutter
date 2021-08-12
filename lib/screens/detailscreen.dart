@@ -1,6 +1,9 @@
 
+import 'package:e_commerce/provider/product_provider.dart';
 import 'package:e_commerce/screens/cartscreen.dart';
+import 'package:e_commerce/widgets/mybutton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'homepage.dart';
 
@@ -17,7 +20,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int count = 1;
-
+  ProductProvider productProvider ;
   final TextStyle myStyleBold =
       TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold);
 
@@ -221,31 +224,29 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget _buildButtonPart() {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      // ignore: deprecated_member_use
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: Colors.pink,
-        child: Text(
-          "Check Out",
-          style: myStyle,
-        ),
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (ctx) => CartScreen(
-                name: widget.name,
-                image: widget.image,
-                price: widget.price,
-              )));
-        },
-      ),
+    return MyButton(
+      name: "Checkout",
+
+      onPressed: () {
+        productProvider.getCartData(
+          image: widget.image,
+          name:  widget.name,
+          price: widget.price,
+          quentity: count,
+        );
+
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (ctx) => CartScreen()));
+      },
     );
   }
+//dung roi
+  //nay la stateufull thì widget.context la ok
+
 
   @override
   Widget build(BuildContext context) {
+    //productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -256,14 +257,14 @@ class _DetailScreenState extends State<DetailScreen> {
         backgroundColor: Colors.grey[400],
         elevation: 0.0,
         // leading: IconButton(
-        //   onPressed: () {
-        //     Navigator.of(context).pushReplacement(
-        //         MaterialPageRoute(builder: (ctx) => HomePage()));
-        //   },
         //   icon: Icon(
         //     Icons.arrow_back,
         //     color: Colors.black,
         //   ),
+        //   onPressed: () {
+        //     Navigator.of(context).pushReplacement(
+        //         new MaterialPageRoute(builder: (ctx) =>HomePage()));
+        //   },
         // ),
         iconTheme: IconThemeData(
             color: Colors.black
@@ -303,6 +304,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       SizedBox(
                         height: 15,
                       ),
+
                       _buildButtonPart(),
                     ],
                   ),

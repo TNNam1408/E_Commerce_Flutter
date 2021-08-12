@@ -1,28 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/model/cartmodel.dart';
 import 'package:e_commerce/model/product.dart';
 import 'package:flutter/material.dart';
-class ProductProvider with ChangeNotifier{
 
+class ProductProvider with ChangeNotifier {
   List<Product> hometopproduct = [];
   Product hometopproductData;
-
-  List<Product> homeachive = [];
-  Product homeachiveData;
-
-  List<Product> topproducts = [];
-  Product topproductsData;
-
-  List<Product> newachives = [];
-  Product newachivesData;
-
   Future<void> getHomeTopProductData() async {
     List<Product> newList = [];
-    QuerySnapshot hometopproductSnapShot = await Firestore.instance
-        .collection("hometopproduct")
-        .getDocuments();
+    QuerySnapshot hometopproductSnapShot =
+        await Firestore.instance.collection("hometopproduct").getDocuments();
     hometopproductSnapShot.documents.forEach(
-          (element) {
-            hometopproductData = Product(
+      (element) {
+        hometopproductData = Product(
             image: element.data["image"],
             name: element.data["name"],
             price: element.data["price"]);
@@ -32,17 +22,19 @@ class ProductProvider with ChangeNotifier{
     hometopproduct = newList;
     notifyListeners();
   }
-  List<Product> get getHomeTopProductList{
+
+  List<Product> get getHomeTopProductList {
     return hometopproduct;
   }
 
+  List<Product> homeachive = [];
+  Product homeachiveData;
   Future<void> getHomeAchiveData() async {
     List<Product> newList = [];
-    QuerySnapshot homeachiveSnapShot = await Firestore.instance
-        .collection("homeachives")
-        .getDocuments();
+    QuerySnapshot homeachiveSnapShot =
+        await Firestore.instance.collection("homeachives").getDocuments();
     homeachiveSnapShot.documents.forEach(
-          (element) {
+      (element) {
         homeachiveData = Product(
             image: element.data["image"],
             name: element.data["name"],
@@ -53,10 +45,13 @@ class ProductProvider with ChangeNotifier{
     homeachive = newList;
     notifyListeners();
   }
-  List<Product> get getHomeAchiveList{
+
+  List<Product> get getHomeAchiveList {
     return homeachive;
   }
 
+  List<Product> topproducts = [];
+  Product topproductsData;
   Future<void> getTopProductsData() async {
     List<Product> newList = [];
     QuerySnapshot topproductsSnapShot = await Firestore.instance
@@ -65,8 +60,8 @@ class ProductProvider with ChangeNotifier{
         .collection("topproducts")
         .getDocuments();
     topproductsSnapShot.documents.forEach(
-          (element) {
-            topproductsData = Product(
+      (element) {
+        topproductsData = Product(
             image: element.data["image"],
             name: element.data["name"],
             price: element.data["price"]);
@@ -76,10 +71,13 @@ class ProductProvider with ChangeNotifier{
     topproducts = newList;
     notifyListeners();
   }
-  List<Product> get getTopProductsList{
+
+  List<Product> get getTopProductsList {
     return topproducts;
   }
 
+  List<Product> newachives = [];
+  Product newachivesData;
   Future<void> getNewAchivesData() async {
     List<Product> newList = [];
     QuerySnapshot newachivesSnapShot = await Firestore.instance
@@ -88,8 +86,8 @@ class ProductProvider with ChangeNotifier{
         .collection("newachives")
         .getDocuments();
     newachivesSnapShot.documents.forEach(
-          (element) {
-            newachivesData = Product(
+      (element) {
+        newachivesData = Product(
             image: element.data["image"],
             name: element.data["name"],
             price: element.data["price"]);
@@ -99,7 +97,32 @@ class ProductProvider with ChangeNotifier{
     newachives = newList;
     notifyListeners();
   }
-  List<Product> get getNewAchivesList{
+
+  List<Product> get getNewAchivesList {
     return newachives;
+  }
+
+  List<CartModel> cartModelList = [];
+  CartModel cartModel;
+
+  void getCartData({
+    String name,
+    String image,
+    int quentity,
+    double price,
+  }) {
+    cartModel = CartModel(
+      name: name,
+      image: image,
+      price: price,
+      quentity: quentity,
+    );
+    cartModelList.add(cartModel);
+  }
+  List<CartModel> get getCartModelList{
+    return List.from(cartModelList);
+  }
+  int get getCartModelListLength{
+    return cartModelList.length;
   }
 }
